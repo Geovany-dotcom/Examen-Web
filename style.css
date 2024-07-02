@@ -1,0 +1,513 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+}
+
+body {
+    background: url('https://images.alphacoders.com/113/1137123.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #FFF;
+}
+
+::selection {
+    color: #000;
+    background: #FFD700;
+}
+
+.start_btn,
+.info_box,
+.quiz_box,
+.result_box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 
+                0 6px 20px rgba(0, 0, 0, 0.29);
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+.info_box.activeInfo,
+.quiz_box.activeQuiz,
+.result_box.activeResult {
+    opacity: 1;
+    z-index: 5;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+.start_btn button {
+    font-size: 20px;
+    font-weight: 700;
+    color: #FFF;
+    padding: 20px 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background: #FF6347;
+    cursor: pointer;
+    transition: background 0.4s, transform 0.4s, box-shadow 0.4s;
+}
+
+.start_btn button:hover {
+    background: #FF4500;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.start_btn button:active {
+    box-shadow: 0 3px #FF6347;
+    transform: translateY(2px);
+}
+
+.info_box {
+    width: 600px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.info_box .info-title {
+    height: 70px;
+    width: 100%;
+    border-bottom: 2px solid #FFD700;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    border-radius: 10px 10px 0 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.info_box .info-list {
+    padding: 20px 30px;
+}
+
+.info_box .info-list .info {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.info_box .info-list .info span {
+    font-weight: 700;
+    color: #FFD700;
+}
+
+.info_box .buttons {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 30px;
+    border-top: 2px solid #FFD700;
+}
+
+.info_box .buttons button {
+    margin: 0 5px;
+    height: 50px;
+    width: 140px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #FF6347;
+    transition: background 0.4s, color 0.4s, transform 0.4s, box-shadow 0.4s;
+}
+
+.info_box .buttons button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.info_box .buttons .quit {
+    background-color: #FF4500;
+    color: white;
+}
+
+.info_box .buttons .restart {
+    background-color: #FF6347;
+    color: white;
+}
+
+.quiz_box {
+    width: 650px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 10px;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.quiz_box header {
+    position: relative;
+    z-index: 2;
+    height: 70px;
+    padding: 0 30px;
+    background: #FFD700;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.1);
+}
+
+.quiz_box header .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #000;
+}
+
+.quiz_box header .timer {
+    color: #000;
+    background: #FF6347;
+    height: 40px;
+    padding: 0 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 130px;
+}
+
+.quiz_box header .timer .time_left_txt {
+    font-weight: 700;
+    font-size: 16px;
+    user-select: none;
+}
+
+.quiz_box header .timer .timer_sec {
+    font-size: 18px;
+    font-weight: 700;
+    height: 30px;
+    width: 45px;
+    color: #FFF;
+    border-radius: 5px;
+    line-height: 30px;
+    text-align: center;
+    background: #000;
+    user-select: none;
+}
+
+.quiz_box header .time_line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    background: #FFD700;
+}
+
+section {
+    padding: 25px 30px 20px 30px;
+    background: rgba(0, 0, 0, 0.9);
+}
+
+section .que_text {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+section .option_list {
+    padding: 15px 0;
+    display: block;
+}
+
+section .option_list .option {
+    background: rgba(255, 99, 71, 0.3);
+    border: 2px solid #FFD700;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+section .option_list .option:last-child {
+    margin-bottom: 0;
+}
+
+section .option_list .option:hover {
+    color: #000;
+    background: #FF6347;
+    border: 2px solid #FFD700;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+section .option_list .option.correct {
+    color: #23903c;
+    background: #d4edda;
+    border: 2px solid #c3e6cb;
+}
+
+section .option_list .option.incorrect {
+    color: #721c24;
+    background: #f8d7da;
+    border: 2px solid #f5c6cb;
+}
+
+section .option_list .option.disabled {
+    pointer-events: none;
+}
+
+section .option_list .option .icon {
+    height: 26px;
+    width: 26px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 13px;
+    pointer-events: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    line-height: 24px;
+}
+
+.option_list .option .icon.tick {
+    color: #23903c;
+    border-color: #23903c;
+    background: #d4edda;
+}
+
+.option_list .option .icon.cross {
+    color: #a42834;
+    background: #f8d7da;
+    border-color: #a42834;
+}
+
+footer {
+    height: 60px;
+    padding: 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 2px solid #FFD700;
+    background: rgba(0, 0, 0, 0.85);
+}
+
+footer .total_que span {
+    display: flex;
+    user-select: none;
+    color: #FFF;
+}
+
+footer .total_que span p {
+    font-weight: 700;
+    padding: 0 5px;
+}
+
+footer .total_que span p:first-child {
+    padding-left: 0;
+}
+
+footer button {
+    height: 45px;
+    padding: 0 15px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    color: #FFF;
+    border-radius: 5px;
+    background: #FF6347;
+    line-height: 10px;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s ease, background 0.4s ease, box-shadow 0.4s;
+}
+
+footer button:hover {
+    background: #FF4500;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+footer button.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+}
+
+.result_box {
+    background: rgb(0, 0, 0);
+    border-radius: 10px;
+    display: flex;
+    padding: 25px 30px;
+    width: 500px;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.result_box .icon {
+    font-size: 100px;
+    color: #FF6347;
+    margin-bottom: 10px;
+}
+
+.result_box .complete_text {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.result_box .score_text span {
+    display: flex;
+    margin: 10px 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.result_box .score_text span p {
+    padding: 0 4px;
+    font-weight: 700;
+}
+
+.result_box .buttons {
+    display: flex;
+    margin: 20px 0;
+}
+
+.result_box .buttons button {
+    margin: 0 10px;
+    height: 50px;
+    padding: 0 20px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    border: 2px solid #FF6347;
+    transition: background 0.4s ease, color 0.4s ease, transform 0.4s ease, box-shadow 0.4s;
+}
+
+.buttons button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.buttons button.restart {
+    color: #fff;
+    background: #FF6347;
+}
+
+.buttons button.restart:hover {
+    background: #FF4500;
+}
+
+.buttons button.quit {
+    color: #FF6347;
+    background: #fff;
+}
+
+.buttons button.quit:hover {
+    color: #fff;
+    background: #FF6347;
+}
+
+.avatar {
+    width: 70%;
+    margin-left: 65px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 10; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+    align-items: center;
+    justify-content: center;
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: rgb(0, 0, 0);
+    margin: auto;
+    padding: 20px;
+    border: 2px solid #FFD700;
+    width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.4s ease-in-out;
+}
+
+.modal-content:hover {
+    transform: scale(1.05);
+}
+
+/* The Close Button */
+.close {
+    color: #FFD700;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.close:hover,
+.close:focus {
+    color: #FF6347;
+    text-decoration: none;
+    cursor: pointer;
+    transform: scale(1.2);
+}
+
+/* Input and button */
+.modal-content input,
+.modal-content button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.modal-content input:hover,
+.modal-content button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content input {
+    background: rgba(0, 0, 0, 0.1);
+    color: #FFD700;
+}
+
+.modal-content button {
+    background-color: #FF6347;
+    color: white;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #FF4500;
+}
